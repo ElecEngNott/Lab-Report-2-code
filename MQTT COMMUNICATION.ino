@@ -125,8 +125,9 @@ void loop() {
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
- 
   distanceCm = duration * SOUND_SPEED/2;
+    
+    
   char String[8];
   dtostrf(distanceCm, 1, 2, String);
   client.publish("esp32/distance", String);
