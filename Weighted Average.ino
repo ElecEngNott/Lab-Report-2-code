@@ -24,6 +24,18 @@ void loop() {
   ChangeDirection(90, 90, SteeringAngle);
 }
 
+void ChangeDirection(int leftMotor, int rightMotor, int SteeringAngle) {
+
+  Wire.beginTransmission(I2C_SLAVE_ADDR); 
+  Wire.write((byte)((leftMotor & 0x0000FF00) >> 8));   
+  Wire.write((byte)(leftMotor & 0x000000FF));          
+  Wire.write((byte)((rightMotor & 0x0000FF00) >> 8)); 
+  Wire.write((byte)(rightMotor & 0x000000FF));         
+  Wire.write((byte)((SteeringAngle & 0x0000FF00) >> 8));
+  Wire.write((byte)(SteeringAngle & 0x000000FF));
+  Wire.endTransmission();
+}
+
 float WeightedAverage() {
   int I1, I2, I3, I4, I5, I6;
   float XPK, sumtop, sumbottom;
@@ -41,14 +53,3 @@ float WeightedAverage() {
   return (XPK);
 }
 
-void ChangeDirection(int leftMotor, int rightMotor, int SteeringAngle) {
-
-  Wire.beginTransmission(I2C_SLAVE_ADDR); 
-  Wire.write((byte)((leftMotor & 0x0000FF00) >> 8));   
-  Wire.write((byte)(leftMotor & 0x000000FF));          
-  Wire.write((byte)((rightMotor & 0x0000FF00) >> 8)); 
-  Wire.write((byte)(rightMotor & 0x000000FF));         
-  Wire.write((byte)((SteeringAngle & 0x0000FF00) >> 8));
-  Wire.write((byte)(SteeringAngle & 0x000000FF));
-  Wire.endTransmission();
-}
